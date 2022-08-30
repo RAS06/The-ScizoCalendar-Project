@@ -1,4 +1,4 @@
-package com.example.thescizocalendarproject;
+package thescizocalendarproject;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
