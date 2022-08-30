@@ -81,7 +81,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.thescizocalendarproject/com.example.thescizocalendarproject.HelloApplication
+                                com.example.thescizocalendarproject/com.example.thescizocalendarproject.ScizoCalendarAppView
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
