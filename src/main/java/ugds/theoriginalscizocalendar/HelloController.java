@@ -3,12 +3,17 @@ package ugds.theoriginalscizocalendar;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+import java.util.Calendar;
+
 public class HelloController {
     @FXML
     private Label welcomeText;
 
+    //Calendar c = Calendar.getInstance();
+
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        //welcomeText.setText(String.valueOf(c.get(Calendar.DAY_OF_MONTH)));
     }
+
 }
