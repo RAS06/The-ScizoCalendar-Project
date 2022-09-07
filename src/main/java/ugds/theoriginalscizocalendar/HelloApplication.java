@@ -36,6 +36,16 @@ public class HelloApplication extends Application {
         dayOfYear = c.get(Calendar.DAY_OF_YEAR);
         System.out.println(c.get(Calendar.DAY_OF_YEAR));
 
+        //What was the first day of the week of the year?
+        //Find the lowest mutliple of seven that is not less than the current day of the year.
+        int multiple = 1;
+        while(multiple + 7 <= dayOfYear){
+            multiple += 7;
+        }
+        System.out.println(multiple);
+        int daysUntilTargetDayOfWeek = dayOfYear - multiple;
+        System.out.println(daysUntilTargetDayOfWeek);
+
     }
 
     public static void main(String[] args) {
