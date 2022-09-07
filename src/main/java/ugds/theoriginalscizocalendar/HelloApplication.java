@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.util.Date;
-import java.sql.Time;
 import java.util.Calendar;
 
 import java.io.IOException;
@@ -34,6 +33,7 @@ public class HelloApplication extends Application {
         //Figure out what year it is.
         year = c.get(Calendar.YEAR);
         dayOfYear = c.get(Calendar.DAY_OF_YEAR);
+        dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         System.out.println(c.get(Calendar.DAY_OF_YEAR));
 
         //What was the first day of the week of the year?
@@ -45,7 +45,15 @@ public class HelloApplication extends Application {
         System.out.println(multiple);
         int daysUntilTargetDayOfWeek = dayOfYear - multiple;
         System.out.println(daysUntilTargetDayOfWeek);
-
+        System.out.println(dayOfWeek);
+        while(daysUntilTargetDayOfWeek > 0){
+            if(dayOfWeek - 1 == 0){
+                dayOfWeek = 8;
+            }
+            daysUntilTargetDayOfWeek--;
+            dayOfWeek--;
+        }
+        System.out.println(dayOfWeek);
     }
 
     public static void main(String[] args) {
