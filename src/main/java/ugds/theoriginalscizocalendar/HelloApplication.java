@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
 
@@ -16,6 +19,7 @@ public class HelloApplication extends Application {
     public static int dayOfWeek;
     public static int firstDayOfWeek;
     public static int dayOfYear;
+    public static ArrayList<String> week = new ArrayList<String>(Arrays.asList("List doesn't start at zero for some reason", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -36,24 +40,31 @@ public class HelloApplication extends Application {
         dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         System.out.println(c.get(Calendar.DAY_OF_YEAR));
 
-        //What was the first day of the week of the year?
-        //Find the lowest mutliple of seven that is not less than the current day of the year.
-        int multiple = 1;
-        while(multiple + 7 <= dayOfYear){
-            multiple += 7;
-        }
-        System.out.println(multiple);
-        int daysUntilTargetDayOfWeek = dayOfYear - multiple;
-        System.out.println(daysUntilTargetDayOfWeek);
-        System.out.println(dayOfWeek);
-        while(daysUntilTargetDayOfWeek > 0){
-            if(dayOfWeek - 1 == 0){
-                dayOfWeek = 8;
+        if(true) { //Replace later with conditional to test the presence or absence of a file with the proper name.
+
+            //What was the first day of the week of the year?
+            //Find the lowest multiple of seven that is not less than the current day of the year.
+            int multiple = 1;
+            while (multiple + 7 <= dayOfYear) {
+                multiple += 7;
             }
-            daysUntilTargetDayOfWeek--;
-            dayOfWeek--;
+            System.out.println(multiple);
+            int daysUntilTargetDayOfWeek = dayOfYear - multiple;
+            System.out.println(daysUntilTargetDayOfWeek);
+            System.out.println(dayOfWeek);
+            while (daysUntilTargetDayOfWeek > 0) {
+                if (dayOfWeek - 1 == 0) {
+                    dayOfWeek = 8;
+                }
+                daysUntilTargetDayOfWeek--;
+                dayOfWeek--;
+            }
+            System.out.println(dayOfWeek);
+
+            //And now write lines in new .txt files that will store data for each button
+
+            //BufferedWriter
         }
-        System.out.println(dayOfWeek);
     }
 
     public static void main(String[] args) {
