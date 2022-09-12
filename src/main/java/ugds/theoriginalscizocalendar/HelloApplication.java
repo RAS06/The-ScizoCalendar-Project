@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -63,7 +65,14 @@ public class HelloApplication extends Application {
 
             //And now write lines in new .txt files that will store data for each button
 
-            //BufferedWriter
+            try {
+                FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage" + year + ".txt", true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write("String Literal. THERE IS NO MOLE. THERE IS NO MOLE.");
+                bw.close();
+            } catch(IOException ioe){
+                ioe.printStackTrace();
+            }
         }
     }
 
