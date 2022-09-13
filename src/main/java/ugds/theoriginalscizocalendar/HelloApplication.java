@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -42,7 +45,9 @@ public class HelloApplication extends Application {
         dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         System.out.println(c.get(Calendar.DAY_OF_YEAR));
 
-        if(true) { //Replace later with conditional to test the presence or absence of a file with the proper name.
+        Path p = Paths.get("src/main/resources/ugds/theoriginalscizocalendar/yearStorage" + year + ".txt");
+
+        if(!Files.exists(p)) { //Replace later with conditional to test the presence or absence of a file with the proper name.
 
             //What was the first day of the week of the year?
             //Find the lowest multiple of seven that is not less than the current day of the year.
@@ -50,7 +55,7 @@ public class HelloApplication extends Application {
             while (multiple + 7 <= dayOfYear) {
                 multiple += 7;
             }
-            System.out.println(multiple);
+            //System.out.println(multiple);
             int daysUntilTargetDayOfWeek = dayOfYear - multiple;
             System.out.println(daysUntilTargetDayOfWeek);
             System.out.println(dayOfWeek);
@@ -61,7 +66,8 @@ public class HelloApplication extends Application {
                 daysUntilTargetDayOfWeek--;
                 dayOfWeek--;
             }
-            System.out.println(dayOfWeek);
+
+            //System.out.println(dayOfWeek);
 
             //And now write lines in new .txt files that will store data for each button
 
@@ -74,6 +80,7 @@ public class HelloApplication extends Application {
                 ioe.printStackTrace();
             }
         }
+
     }
 
     public static void main(String[] args) {
