@@ -43,7 +43,7 @@ public class HelloApplication extends Application {
         year = c.get(Calendar.YEAR);
         dayOfYear = c.get(Calendar.DAY_OF_YEAR);
         dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        System.out.println(c.get(Calendar.DAY_OF_YEAR));
+        //System.out.println(c.get(Calendar.DAY_OF_YEAR));
 
         Path p = Paths.get("src/main/resources/ugds/theoriginalscizocalendar/yearStorage" + year + ".txt");
 
@@ -72,14 +72,37 @@ public class HelloApplication extends Application {
             //And now write lines in new .txt files that will store data for each button
 
             try {
-                FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage" + year + ".txt", true);
+                FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("String Literal. THERE IS NO MOLE. THERE IS NO MOLE.");
+                bw.write("String Literal. THERE IS A MOLE. THERE IS A MOLE.");
                 bw.close();
+                System.out.println("Created");
             } catch(IOException ioe){
                 ioe.printStackTrace();
             }
+        } else {
+            System.out.println("Found");
         }
+        //Print lines to demarcate data for each button element in the .txt file.
+        try {
+            FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            int daysToPrint;
+            if(year % 4 == 0)
+                daysToPrint = 366;
+            else
+                daysToPrint = 365;
+            for(int i = 0; i < daysToPrint; i++) {
+                bw.write("");
+            }
+
+        } catch (IOException ioe){
+            ioe.printStackTrace();
+        }
+
+
+        //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December
+
 
     }
 
