@@ -1,8 +1,12 @@
 package ugds.theoriginalscizocalendar;
 
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
@@ -14,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Calendar;
+import com.google.gson.Gson;
+
 
 import java.io.IOException;
 
@@ -29,11 +35,19 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 900, 240);
+        AnchorPane a = new AnchorPane();
+        Button b = new DayButton("Skeet");
+        b.setLayoutX(100);
+        b.setLayoutY(100);
+        a.getChildren().add(b);
+
+        Scene scene = new Scene(a, 900, 240);
         stage.setTitle("Hello!");
         buildUI();
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public void buildUI(){
@@ -100,8 +114,11 @@ public class HelloApplication extends Application {
             ioe.printStackTrace();
         }
 
+        Gson gson = new Gson();
+
 
         //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December
+
 
 
     }
