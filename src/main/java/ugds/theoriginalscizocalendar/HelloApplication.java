@@ -36,8 +36,10 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         AnchorPane a = new AnchorPane();
+        stage.setHeight(1000);
+        stage.setWidth(1000);
         Button b = new DayButton("Skeet");
-        b.setLayoutX(100);
+        b.setLayoutX(b.layoutXProperty().bindBidirectional(a.getWidth().divide(2)));
         b.setLayoutY(100);
         a.getChildren().add(b);
 
