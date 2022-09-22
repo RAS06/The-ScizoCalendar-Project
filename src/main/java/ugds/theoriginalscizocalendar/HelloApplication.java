@@ -139,7 +139,7 @@ public class HelloApplication extends Application {
         Gson gson = new Gson();
 
 
-        //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December
+        //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December).
 
 
 
