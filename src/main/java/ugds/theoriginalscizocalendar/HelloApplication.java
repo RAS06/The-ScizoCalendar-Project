@@ -1,12 +1,17 @@
 package ugds.theoriginalscizocalendar;
 
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
@@ -16,7 +21,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.Calendar;
 import com.google.gson.Gson;
 
@@ -35,15 +39,31 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        AnchorPane a = new AnchorPane();
+
+                 //Binding attempts: result failure. Remains for fallback purposes.
+        //AnchorPane a = new AnchorPane();
+        //a.setStyle("-fx-background-color: black");
+        //DoubleProperty dp =  new SimpleDoubleProperty(a.widthProperty().getValue() / 2);
+        //b.layoutXProperty().bind(dp);
+        //a.getChildren().add(b);
+
+        GridPane gp = new GridPane();
+        gp.setAlignment(Pos.CENTER);
+        gp.setPadding(new Insets(10, 10, 10, 10));
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.setStyle("-fx-background-color: black");
+        gp.add(new DayButton("Skeet"), 0, 0);
+        gp.add(new DayButton("Yeeet"), 1, 1);
+        gp.add(new DayButton("Reeet"), 2, 2);
+
         stage.setHeight(1000);
         stage.setWidth(1000);
-        Button b = new DayButton("Skeet");
-        b.setLayoutX(b.layoutXProperty().bindBidirectional(a.getWidth().divide(2)));
-        b.setLayoutY(100);
-        a.getChildren().add(b);
 
-        Scene scene = new Scene(a, 900, 240);
+
+
+
+        Scene scene = new Scene(gp, 900, 240);
         stage.setTitle("Hello!");
         buildUI();
         stage.setScene(scene);
