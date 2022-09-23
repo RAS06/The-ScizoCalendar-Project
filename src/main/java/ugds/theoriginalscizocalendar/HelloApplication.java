@@ -53,9 +53,15 @@ public class HelloApplication extends Application {
         gp.setHgap(10);
         gp.setVgap(10);
         gp.setStyle("-fx-background-color: black");
-        gp.add(new DayButton("Skeet"), 0, 0);
-        gp.add(new DayButton("Yeeet"), 1, 1);
-        gp.add(new DayButton("Reeet"), 2, 2);
+        //gp.add(new DayButton("Skeet"), 0, 0);
+        //gp.add(new DayButton("Yeeet"), 1, 1);
+        //gp.add(new DayButton("Reeet"), 2, 2);
+
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 6; j++){
+                gp.add(new DayButton("String Literal"), i, j);
+            }
+        }
 
         stage.setHeight(1000);
         stage.setWidth(1000);
