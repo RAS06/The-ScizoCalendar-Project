@@ -58,8 +58,11 @@ public class HelloApplication extends Application {
         //gp.add(new DayButton("Reeet"), 2, 2);
 
         for(int i = 0; i < 7; i++){
-            for(int j = 0; j < 6; j++){
-                gp.add(new DayButton("String Literal"), i, j);
+            for(int j = 9; j < 15; j++){
+                DayButton dateButton = new DayButton("String Literal");
+                dateButton.setPrefWidth(100);
+                dateButton.setPrefHeight(100);
+                gp.add(dateButton, i, j);
             }
         }
 
@@ -147,6 +150,13 @@ public class HelloApplication extends Application {
 
         //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December).
 
+        ArrayList<Month> printable = new ArrayList<Month>();
+        ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+
+
+        for(int i = 0; i < 24; i++){
+            int currMonth = 0;
+        }
 
 
     }
