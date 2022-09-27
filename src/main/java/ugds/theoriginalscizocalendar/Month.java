@@ -1,7 +1,9 @@
 package ugds.theoriginalscizocalendar;
 
 public class Month {
-    public Month(String name){
+
+
+    public Month(String id){
 
     }
 }

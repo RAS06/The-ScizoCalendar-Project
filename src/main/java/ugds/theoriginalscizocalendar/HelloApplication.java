@@ -156,6 +156,45 @@ public class HelloApplication extends Application {
 
         for(int i = 0; i < 24; i++){
             int currMonth = 0;
+            Month m = new Month(months.get(i) + year);
+            switch(months.get(i)){
+                case "January":
+                    for(int i = 0; i < 31; i++){}
+                    break;
+                case "February":
+                    for(int j = 0; j < 28; j++){}
+                    break;
+                case "March":
+                    for(int k = 0; k < 31; k++){}
+                    break;
+                case "April":
+                    for(int l = 0; l < 30; l++){}
+                    break;
+                case "May":
+                    for(int mm = 0; mm < 31; mm++){}
+                    break;
+                case "June":
+                    for(int n = 0; n < 30; n++){}
+                    break;
+                case "July":
+                    for(int o = 0; o < 31; o++){}
+                    break;
+                case "August":
+                    for(int p = 0; p < 31; p++){}
+                    break;
+                case "September":
+                    for(int q = 0; q < 30; q++){}
+                    break;
+                case "October":
+                    for(int r = 0; r < 31; r++){}
+                    break;
+                case "November":
+                    for(int s = 0; s < 30; s++){}
+                    break;
+                case "December":
+                    for(int t = 0; t < 31; t++){}
+                    break;
+            }
         }
 
 
