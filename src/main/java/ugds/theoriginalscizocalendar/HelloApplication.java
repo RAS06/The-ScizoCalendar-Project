@@ -32,9 +32,11 @@ public class HelloApplication extends Application {
 
     public static int year;
     public static int dayOfWeek;
+    public static int daysToPrint;
     public static int firstDayOfWeek;
     public static int dayOfYear;
     public static ArrayList<String> week = new ArrayList<String>(Arrays.asList("List doesn't start at zero for some reason", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -132,7 +134,7 @@ public class HelloApplication extends Application {
         try {
             FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
             BufferedWriter bw = new BufferedWriter(fw);
-            int daysToPrint;
+
             if(year % 4 == 0)
                 daysToPrint = 366;
             else
@@ -153,48 +155,30 @@ public class HelloApplication extends Application {
         ArrayList<Month> printable = new ArrayList<Month>();
         ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
 
-
+        int currMonth = 0;
         for(int i = 0; i < 24; i++){
-            int currMonth = 0;
+            if(currMonth == 12)
+                currMonth = 0;
+
             Month m = new Month(months.get(i) + year);
-            switch(months.get(i)){
-                case "January":
-                    for(int i = 0; i < 31; i++){}
-                    break;
-                case "February":
-                    for(int j = 0; j < 28; j++){}
-                    break;
-                case "March":
-                    for(int k = 0; k < 31; k++){}
-                    break;
-                case "April":
-                    for(int l = 0; l < 30; l++){}
-                    break;
-                case "May":
-                    for(int mm = 0; mm < 31; mm++){}
-                    break;
-                case "June":
-                    for(int n = 0; n < 30; n++){}
-                    break;
-                case "July":
-                    for(int o = 0; o < 31; o++){}
-                    break;
-                case "August":
-                    for(int p = 0; p < 31; p++){}
-                    break;
-                case "September":
-                    for(int q = 0; q < 30; q++){}
-                    break;
-                case "October":
-                    for(int r = 0; r < 31; r++){}
-                    break;
-                case "November":
-                    for(int s = 0; s < 30; s++){}
-                    break;
-                case "December":
-                    for(int t = 0; t < 31; t++){}
-                    break;
-            }
+           if(months.get(i).equals("January") || months.get(i).equals("March") || months.get(i).equals("May") || months.get(i).equals("July") || months.get(i).equals("August") || months.get(i).equals("October") || months.get(i).equals("December")){
+               for(int j = 0; i < 31; i++){
+                   Month currMonth = new Month("");
+               }
+           } else if(months.get(i).equals("April") || months.get(i).equals("June") || months.get(i).equals("September") || months.get(i).equals("November")){
+               for(int k = 0; k < 30; k++){
+
+               }
+           } else if (months.get(i).equals("February") && daysToPrint == 366){
+               for(int l = 0; l < 29; l ++){
+
+               }
+           } else{
+               for(int n = 0; n < 28; n++){
+
+               }
+           }
+            currMonth++;
         }
 
 
