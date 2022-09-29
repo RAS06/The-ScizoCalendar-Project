@@ -162,8 +162,10 @@ public class HelloApplication extends Application {
 
             Month m = new Month(months.get(i) + year);
            if(months.get(i).equals("January") || months.get(i).equals("March") || months.get(i).equals("May") || months.get(i).equals("July") || months.get(i).equals("August") || months.get(i).equals("October") || months.get(i).equals("December")){
+               Month printingMonth = new Month(months.get(i) + " " + year);
                for(int j = 0; i < 31; i++){
-                   Month currMonth = new Month("");
+                   //Populate the 2D array for the month object
+
                }
            } else if(months.get(i).equals("April") || months.get(i).equals("June") || months.get(i).equals("September") || months.get(i).equals("November")){
                for(int k = 0; k < 30; k++){
@@ -175,6 +177,7 @@ public class HelloApplication extends Application {
                }
            } else{
                for(int n = 0; n < 28; n++){
+
 
                }
            }
