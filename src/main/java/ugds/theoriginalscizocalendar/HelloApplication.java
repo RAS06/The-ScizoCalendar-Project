@@ -121,7 +121,6 @@ public class HelloApplication extends Application {
             try {
                 FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.write("String Literal. THERE IS A MOLE. THERE IS A MOLE.");
                 bw.close();
                 System.out.println("Created");
             } catch(IOException ioe){
@@ -139,9 +138,7 @@ public class HelloApplication extends Application {
                 daysToPrint = 366;
             else
                 daysToPrint = 365;
-            for(int i = 0; i < daysToPrint; i++) {
-                bw.write("");
-            }
+
 
         } catch (IOException ioe){
             ioe.printStackTrace();
@@ -156,32 +153,48 @@ public class HelloApplication extends Application {
         ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
 
         int currMonth = 0;
-        for(int i = 0; i < 24; i++){
-            if(currMonth == 12)
-                currMonth = 0;
+        try {
+            FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
+            BufferedWriter bw = new BufferedWriter(fw);
 
-            Month m = new Month(months.get(i) + year);
-           if(months.get(i).equals("January") || months.get(i).equals("March") || months.get(i).equals("May") || months.get(i).equals("July") || months.get(i).equals("August") || months.get(i).equals("October") || months.get(i).equals("December")){
-               Month printingMonth = new Month(months.get(i) + " " + year);
-               for(int j = 0; i < 31; i++){
-                   //Populate the 2D array for the month object
+            for(int i = 0; i < 24; i++){
+                if(currMonth == 12)
+                    currMonth = 0;
 
+                Month m = new Month(months.get(i) + year);
+               if(months.get(i).equals("January") || months.get(i).equals("March") || months.get(i).equals("May") || months.get(i).equals("July") || months.get(i).equals("August") || months.get(i).equals("October") || months.get(i).equals("December")){
+
+                   for(int j = 0; i < 31; i++){
+                       //Create objects
+                       DayButton dayToAdd = new DayButton(months.get(i) + " " + j + " " + year);
+                       String str = gson.toJson(dayToAdd);
+                       bw.write(str);
+                   }
+               } else if(months.get(i).equals("April") || months.get(i).equals("June") || months.get(i).equals("September") || months.get(i).equals("November")){
+                   for(int k = 0; k < 30; k++){
+                       DayButton dayToAdd = new DayButton(months.get(i) + " " + k + " " + year);
+                       String str = gson.toJson(dayToAdd);
+                       bw.write(str);
+                   }
+               } else if (months.get(i).equals("February") && daysToPrint == 366){
+                   for(int l = 0; l < 29; l ++){
+                       DayButton dayToAdd = new DayButton(months.get(i) + " " + l + " " + year);
+                       String str = gson.toJson(dayToAdd);
+                       bw.write(str);
+                   }
+               } else{
+                   for(int n = 0; n < 28; n++){
+                       DayButton dayToAdd = new DayButton(months.get(i) + " " + m + " " + year);
+                       String str = gson.toJson(dayToAdd);
+                       bw.write(str);
+
+                   }
                }
-           } else if(months.get(i).equals("April") || months.get(i).equals("June") || months.get(i).equals("September") || months.get(i).equals("November")){
-               for(int k = 0; k < 30; k++){
+                currMonth++;
+            }
 
-               }
-           } else if (months.get(i).equals("February") && daysToPrint == 366){
-               for(int l = 0; l < 29; l ++){
-
-               }
-           } else{
-               for(int n = 0; n < 28; n++){
-
-
-               }
-           }
-            currMonth++;
+        } catch (IOException ioe){
+            ioe.printStackTrace();
         }
 
 

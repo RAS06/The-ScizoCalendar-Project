@@ -10,7 +10,7 @@ public class Month {
         name = id;
     }
 
-    public void addDay(//Need in){
+    public void addDay(){
 
     }
 }

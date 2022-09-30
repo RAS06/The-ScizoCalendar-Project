@@ -7,9 +7,9 @@ import javafx.scene.control.Button;
 
 public class DayButton extends Button {
 
-    DoubleProperty x, y;
+    String name;
     public DayButton(String s){
         super(s);
-
+        name = s;
     }
 }
