@@ -71,8 +71,9 @@ public class HelloApplication extends Application {
         stage.setHeight(1000);
         stage.setWidth(1000);
 
-
-
+        Gson gson = new Gson();
+        String str = gson.toString();
+        System.out.println(str);
 
         Scene scene = new Scene(gp, 900, 240);
         stage.setTitle("Hello!");
@@ -144,7 +145,7 @@ public class HelloApplication extends Application {
             ioe.printStackTrace();
         }
 
-        Gson gson = new Gson();
+
 
 
         //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December).
@@ -167,8 +168,8 @@ public class HelloApplication extends Application {
 
                    for(int j = 0; j < 31; j++){
                        //Create objects
-                       DailyData dayToAdd = new DailyData(months.get(i) + " " + j + " " + year);
-                       System.out.println(gson.toJson(dayToAdd));
+                       DailyData dayToAdd = new DailyData(months.get(currMonth) + " " + j + " " + year);
+                       //System.out.println(gson.toJson(dayToAdd));
                    }
                } else if(months.get(currMonth).equals("April") || months.get(currMonth).equals("June") || months.get(currMonth).equals("September") || months.get(currMonth).equals("November")){
                    for(int k = 0; k < 30; k++){
