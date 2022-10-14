@@ -71,9 +71,8 @@ public class HelloApplication extends Application {
         stage.setHeight(1000);
         stage.setWidth(1000);
 
-        Gson gson = new Gson();
-        String str = gson.toString();
-        System.out.println(str);
+        DailyData testData = new DailyData("Name");
+        System.out.println(SerializationMachine.turnIntoJson(testData));
 
         Scene scene = new Scene(gp, 900, 240);
         stage.setTitle("Hello!");
