@@ -72,7 +72,7 @@ public class HelloApplication extends Application {
         stage.setWidth(1000);
 
         DailyData testData = new DailyData("Name");
-        System.out.println(SerializationMachine.turnIntoJson(testData));
+        //System.out.println(SerializationMachine.turnIntoJson(testData));
 
         Scene scene = new Scene(gp, 900, 240);
         stage.setTitle("Hello!");
@@ -160,28 +160,34 @@ public class HelloApplication extends Application {
             for(int i = 0; i < 24; i++){
                 if(currMonth == 12) {
                     currMonth = 0;
+                    year++;
                 }
 
                 //Month m = new Month(months.get(i) + year);
                if(months.get(currMonth).equals("January") || months.get(currMonth).equals("March") || months.get(currMonth).equals("May") || months.get(currMonth).equals("July") || months.get(currMonth).equals("August") || months.get(currMonth).equals("October") || months.get(currMonth).equals("December")){
 
-                   for(int j = 0; j < 31; j++){
+                   for(int j = 1; j < 32; j++){
                        //Create objects
-                       DailyData dayToAdd = new DailyData(months.get(currMonth) + " " + j + " " + year);
-                       //System.out.println(gson.toJson(dayToAdd));
+                       DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + j + " " + year);
+                       dayToAdd.assignDayOfWeek(dayOfWeek);
+                       dayOfWeek++;
+                       System.out.println(dayToAdd.toString());
+
+                       if(dayOfWeek == 8){
+                           dayOfWeek = 1;
+                       }
                    }
                } else if(months.get(currMonth).equals("April") || months.get(currMonth).equals("June") || months.get(currMonth).equals("September") || months.get(currMonth).equals("November")){
-                   for(int k = 0; k < 30; k++){
+                   for(int k = 1; k < 31; k++){
                        //DayButton dayToAdd = new DayButton(months.get(i) + " " + k + " " + year);
                        //gson.toJson(dayToAdd);
                    }
                } else if (months.get(currMonth).equals("February") && daysToPrint == 366){
-                   for(int l = 0; l < 29; l ++){
+                   for(int l = 1; l < 30; l ++){
                        //DayButton dayToAdd = new DayButton(months.get(i) + " " + l + " " + year);
-                       //gson.toJson(dayToAdd);
                    }
                } else{
-                   for(int n = 0; n < 28; n++){
+                   for(int n = 1; n < 29; n++){
                        // dayToAdd = new DayButton(months.get(i) + " " + m + " " + year);
                        //gson.toJson(dayToAdd);
                    }
