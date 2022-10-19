@@ -92,7 +92,7 @@ public class HelloApplication extends Application {
         dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         //System.out.println(c.get(Calendar.DAY_OF_YEAR));
 
-        Path p = Paths.get("src/main/resources/ugds/theoriginalscizocalendar/yearStorage" + year + ".txt");
+        Path p = Paths.get("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt");
 
         if(!Files.exists(p)) { //Replace later with conditional to test the presence or absence of a file with the proper name.
 
@@ -126,9 +126,7 @@ public class HelloApplication extends Application {
             } catch(IOException ioe){
                 ioe.printStackTrace();
             }
-        } else {
-            System.out.println("Found");
-        }
+
         //Print lines to demarcate data for each button element in the .txt file.
         try {
             FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
@@ -170,6 +168,7 @@ public class HelloApplication extends Application {
                        //Create objects
                        DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + j + " " + year);
                        dayToAdd.assignDayOfWeek(dayOfWeek);
+                       SerializationMachine.serialize(dayToAdd);
                        dayOfWeek++;
                        System.out.println(dayToAdd.toString());
 
@@ -200,7 +199,9 @@ public class HelloApplication extends Application {
             ioe.printStackTrace();
         }
 
-
+        } else {
+            System.out.println("Found");
+        }
     }
 
     public static void main(String[] args) {
