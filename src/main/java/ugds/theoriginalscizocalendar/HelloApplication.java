@@ -1,16 +1,12 @@
 package ugds.theoriginalscizocalendar;
 
 import javafx.application.Application;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -22,10 +18,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import com.google.gson.Gson;
 
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class HelloApplication extends Application {
@@ -36,20 +32,22 @@ public class HelloApplication extends Application {
     public static int firstDayOfWeek;
     public static int dayOfYear;
     public static ArrayList<String> week = new ArrayList<String>(Arrays.asList("List doesn't start at zero for some reason", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
+    public  GridPane gp = new GridPane();
+    public ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
 
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
 
-                 //Binding attempts: result failure. Remains for fallback purposes.
+        //Binding attempts: result failure. Remains for fallback purposes.
         //AnchorPane a = new AnchorPane();
         //a.setStyle("-fx-background-color: black");
         //DoubleProperty dp =  new SimpleDoubleProperty(a.widthProperty().getValue() / 2);
         //b.layoutXProperty().bind(dp);
         //a.getChildren().add(b);
 
-        GridPane gp = new GridPane();
+
         gp.setAlignment(Pos.CENTER);
         gp.setPadding(new Insets(10, 10, 10, 10));
         gp.setHgap(10);
@@ -59,14 +57,7 @@ public class HelloApplication extends Application {
         //gp.add(new DayButton("Yeeet"), 1, 1);
         //gp.add(new DayButton("Reeet"), 2, 2);
 
-        for(int i = 0; i < 7; i++){
-            for(int j = 9; j < 15; j++){
-                DayButton dateButton = new DayButton("String Literal");
-                dateButton.setPrefWidth(100);
-                dateButton.setPrefHeight(100);
-                gp.add(dateButton, i, j);
-            }
-        }
+
 
         stage.setHeight(1000);
         stage.setWidth(1000);
@@ -84,6 +75,60 @@ public class HelloApplication extends Application {
     }
 
     public void buildUI(){
+        constructStructure();
+        Label l = new Label("January " + year);
+        l.setStyle("-fx-text-fill: white");
+        gp.add(l, 3, 0);
+        AtomicInteger currentDisplayedMonth = new AtomicInteger(1);
+        AtomicInteger displayYear = new AtomicInteger(year);
+
+        Button left = new Button("Previous");
+        gp.add(left, 1, 0);
+        left.setOnAction(e -> {
+            if(!(currentDisplayedMonth.get() <= 1)){
+                currentDisplayedMonth.getAndDecrement();
+            }
+            int index = currentDisplayedMonth.get();
+            //Calculate and Change
+            if(currentDisplayedMonth.get() > 12){
+
+                index -= 12;
+            }
+            if(currentDisplayedMonth.get() == 12){
+                displayYear.getAndDecrement();
+            }
+            l.setText(months.get(index - 1 ) + " " + displayYear.get());
+        });
+
+        Button right = new Button("Next");
+        gp.add(right, 6, 0);
+        right.setOnAction(e ->{
+            if(!(currentDisplayedMonth.get() >= 24)) {
+                currentDisplayedMonth.getAndIncrement();
+            }
+            int index = currentDisplayedMonth.get();
+            //Calculate and Change
+            if(currentDisplayedMonth.get() > 12){
+                index -= 12;
+            }
+            if(currentDisplayedMonth.get() == 12){
+                displayYear.getAndIncrement();
+            }
+            l.setText(months.get(index - 1 ) + " " + displayYear.get());
+        });
+
+        for(int i = 0; i < 7; i++){
+            for(int j = 9; j < 15; j++){
+                DayButton dateButton = new DayButton("String Literal");
+                dateButton.setPrefWidth(100);
+                dateButton.setPrefHeight(100);
+                gp.add(dateButton, i, j);
+            }
+        }
+
+    }
+
+    public void constructStructure() {
         Calendar c = Calendar.getInstance();
 
         //Figure out what year it is.
@@ -127,77 +172,109 @@ public class HelloApplication extends Application {
                 ioe.printStackTrace();
             }
 
-        //Print lines to demarcate data for each button element in the .txt file.
-        try {
-            FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
+            //Print lines to demarcate data for each button element in the .txt file.
+            try {
+                FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
+                BufferedWriter bw = new BufferedWriter(fw);
 
-            if(year % 4 == 0)
-                daysToPrint = 366;
-            else
-                daysToPrint = 365;
-
-
-        } catch (IOException ioe){
-            ioe.printStackTrace();
-        }
+                if(year % 4 == 0)
+                    daysToPrint = 366;
+                else
+                    daysToPrint = 365;
 
 
-
-
-        //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December).
-
-        ArrayList<Month> printable = new ArrayList<Month>();
-        ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
-
-        int currMonth = 0;
-        try {
-            FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
-            BufferedWriter bw = new BufferedWriter(fw);
-
-            for(int i = 0; i < 24; i++){
-                if(currMonth == 12) {
-                    currMonth = 0;
-                    year++;
-                }
-
-                //Month m = new Month(months.get(i) + year);
-               if(months.get(currMonth).equals("January") || months.get(currMonth).equals("March") || months.get(currMonth).equals("May") || months.get(currMonth).equals("July") || months.get(currMonth).equals("August") || months.get(currMonth).equals("October") || months.get(currMonth).equals("December")){
-
-                   for(int j = 1; j < 32; j++){
-                       //Create objects
-                       DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + j + " " + year);
-                       dayToAdd.assignDayOfWeek(dayOfWeek);
-                       SerializationMachine.serialize(dayToAdd);
-                       dayOfWeek++;
-                       System.out.println(dayToAdd.toString());
-
-                       if(dayOfWeek == 8){
-                           dayOfWeek = 1;
-                       }
-                   }
-               } else if(months.get(currMonth).equals("April") || months.get(currMonth).equals("June") || months.get(currMonth).equals("September") || months.get(currMonth).equals("November")){
-                   for(int k = 1; k < 31; k++){
-                       //DayButton dayToAdd = new DayButton(months.get(i) + " " + k + " " + year);
-                       //gson.toJson(dayToAdd);
-                   }
-               } else if (months.get(currMonth).equals("February") && daysToPrint == 366){
-                   for(int l = 1; l < 30; l ++){
-                       //DayButton dayToAdd = new DayButton(months.get(i) + " " + l + " " + year);
-                   }
-               } else{
-                   for(int n = 1; n < 29; n++){
-                       // dayToAdd = new DayButton(months.get(i) + " " + m + " " + year);
-                       //gson.toJson(dayToAdd);
-                   }
-               }
-                currMonth++;
+            } catch (IOException ioe){
+                ioe.printStackTrace();
             }
 
 
-        } catch (IOException ioe){
-            ioe.printStackTrace();
-        }
+
+
+            //Now construct a series of 2D Arrays (24 for two years, Last Jan to next year's December).
+
+            ArrayList<Month> printable = new ArrayList<Month>();
+
+
+            int currMonth = 0;
+            try {
+                FileWriter fw = new FileWriter("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + year + ".txt", true);
+                BufferedWriter bw = new BufferedWriter(fw);
+
+                for(int i = 0; i < 24; i++){
+                    if(currMonth == 12) {
+                        currMonth = 0;
+                        year++;
+                    }
+
+                    //Month m = new Month(months.get(i) + year);
+                    if(months.get(currMonth).equals("January") || months.get(currMonth).equals("March") || months.get(currMonth).equals("May") || months.get(currMonth).equals("July") || months.get(currMonth).equals("August") || months.get(currMonth).equals("October") || months.get(currMonth).equals("December")){
+
+                        DayButton[][] organizer = new DayButton[6][7];
+                        int currRow = 0;
+                        int currCol = dayOfWeek--;
+
+                        for(int j = 1; j < 32; j++){
+                            //Create objects
+                            DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + j + " " + year);
+                            dayToAdd.assignDayOfWeek(dayOfWeek);
+
+                            SerializationMachine.serialize(dayToAdd);
+                            dayOfWeek++;
+                            System.out.println(dayToAdd.toString());
+
+
+
+                            if(dayOfWeek == 8){
+                                dayOfWeek = 1;
+                            }
+                        }
+                    } else if(months.get(currMonth).equals("April") || months.get(currMonth).equals("June") || months.get(currMonth).equals("September") || months.get(currMonth).equals("November")){
+                        for(int k = 1; k < 31; k++){
+                            //Create objects
+                            DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + k + " " + year);
+                            dayToAdd.assignDayOfWeek(dayOfWeek);
+                            SerializationMachine.serialize(dayToAdd);
+                            dayOfWeek++;
+                            System.out.println(dayToAdd.toString());
+
+                            if(dayOfWeek == 8){
+                                dayOfWeek = 1;
+                            }
+                        }
+                    } else if (months.get(currMonth).equals("February") && daysToPrint == 366){
+                        for(int l = 1; l < 30; l ++){
+                            //Create objects
+                            DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + l + " " + year);
+                            dayToAdd.assignDayOfWeek(dayOfWeek);
+                            SerializationMachine.serialize(dayToAdd);
+                            dayOfWeek++;
+                            System.out.println(dayToAdd.toString());
+
+                            if(dayOfWeek == 8){
+                                dayOfWeek = 1;
+                            }
+                        }
+                    } else{
+                        for(int n = 1; n < 29; n++){
+                            //Create objects
+                            DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + n + " " + year);
+                            dayToAdd.assignDayOfWeek(dayOfWeek);
+                            SerializationMachine.serialize(dayToAdd);
+                            dayOfWeek++;
+                            System.out.println(dayToAdd.toString());
+
+                            if(dayOfWeek == 8){
+                                dayOfWeek = 1;
+                            }
+                        }
+                    }
+                    currMonth++;
+                }
+
+
+            } catch (IOException ioe){
+                ioe.printStackTrace();
+            }
 
         } else {
             System.out.println("Found");
