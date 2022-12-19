@@ -201,6 +201,9 @@ public class HelloApplication extends Application {
                 BufferedWriter bw = new BufferedWriter(fw);
 
                 for(int i = 0; i < 24; i++){
+
+
+
                     if(currMonth == 12) {
                         currMonth = 0;
                         year++;
@@ -211,12 +214,20 @@ public class HelloApplication extends Application {
 
                         DayButton[][] organizer = new DayButton[6][7];
                         int currRow = 0;
-                        int currCol = dayOfWeek--;
+                        int currCol = dayOfWeek - 1;
 
                         for(int j = 1; j < 32; j++){
                             //Create objects
                             DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + j + " " + year);
                             dayToAdd.assignDayOfWeek(dayOfWeek);
+                            dayToAdd.assignRowPosition(currRow);
+                            dayToAdd.assignColumnPosition(currCol);
+
+                            currCol++;
+                            if(currCol >= 8){
+                                currRow++;
+                                currCol = 1;
+                            }
 
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
@@ -224,9 +235,10 @@ public class HelloApplication extends Application {
 
 
 
-                            if(dayOfWeek == 8){
+                            if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
                             }
+
                         }
                     } else if(months.get(currMonth).equals("April") || months.get(currMonth).equals("June") || months.get(currMonth).equals("September") || months.get(currMonth).equals("November")){
                         for(int k = 1; k < 31; k++){
@@ -237,7 +249,7 @@ public class HelloApplication extends Application {
                             dayOfWeek++;
                             System.out.println(dayToAdd.toString());
 
-                            if(dayOfWeek == 8){
+                            if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
                             }
                         }
@@ -250,11 +262,11 @@ public class HelloApplication extends Application {
                             dayOfWeek++;
                             System.out.println(dayToAdd.toString());
 
-                            if(dayOfWeek == 8){
+                            if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
                             }
                         }
-                    } else{
+                    } else if (months.get(currMonth).equals("February")){
                         for(int n = 1; n < 29; n++){
                             //Create objects
                             DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + n + " " + year);
@@ -263,10 +275,11 @@ public class HelloApplication extends Application {
                             dayOfWeek++;
                             System.out.println(dayToAdd.toString());
 
-                            if(dayOfWeek == 8){
+                            if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
                             }
                         }
+
                     }
                     currMonth++;
                 }
