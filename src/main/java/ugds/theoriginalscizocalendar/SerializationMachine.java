@@ -2,9 +2,7 @@ package ugds.theoriginalscizocalendar;
 
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 
 public class SerializationMachine {
@@ -24,5 +22,39 @@ public class SerializationMachine {
         }catch(IOException ioe){
             ioe.printStackTrace();
         }
+    }
+    public static DayButton[][] deserialize(/* Year */ String y, /* Month */ String m) throws IOException {
+        DayButton[][] returnStructure = new DayButton[6][7];
+        FileInputStream fis = new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/yearStorage/" + y + ".txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+        String line;
+        while((line = br.readLine()) != null){
+            if(line.contains(m)){
+                //Extract all data from line and create button object.
+                String mon = line.substring(0, line.indexOf(" "));
+                line = line.substring((line.indexOf(" ")) + 1);
+                int date = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+                line = line.substring((line.indexOf(" ") + 1));
+                int year = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+                line = line.substring(line.indexOf(" ") + 1);
+                int dayOfWeek = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+                line = line.substring(line.indexOf(" ") + 2);
+                int row = Integer.parseInt(line.substring(0, line.indexOf(" ")));
+                line = line.substring(line.indexOf(" ") + 1);
+                int col = Integer.parseInt(line.substring(0, line.indexOf("]")));
+                DayButton dayToAdd = new DayButton(dayOfWeek, row, col, date, mon, year);
+                //System.out.println(mon + " " + date + " " + year + " " + dayOfWeek + " " + row + " " + col);
+                returnStructure[row][col] = dayToAdd;
+            }
+        }
+//        for (DayButton[] x : returnStructure)
+//        {
+//            for (DayButton q : x)
+//            {
+//                System.out.print(q + " ");
+//            }
+//            System.out.println();
+//        }
+        return returnStructure;
     }
 }

@@ -74,7 +74,7 @@ public class HelloApplication extends Application {
 
     }
 
-    public void buildUI(){
+    public void buildUI() throws IOException {
         constructStructure();
         Label l = new Label("January " + year);
         l.setStyle("-fx-text-fill: white");
@@ -125,7 +125,7 @@ public class HelloApplication extends Application {
                 gp.add(dateButton, i, j);
             }
         }
-
+        SerializationMachine.deserialize("2023", "January");
     }
 
     public void constructStructure() {
@@ -212,7 +212,7 @@ public class HelloApplication extends Application {
                     //Month m = new Month(months.get(i) + year);
                     if(months.get(currMonth).equals("January") || months.get(currMonth).equals("March") || months.get(currMonth).equals("May") || months.get(currMonth).equals("July") || months.get(currMonth).equals("August") || months.get(currMonth).equals("October") || months.get(currMonth).equals("December")){
 
-                        DayButton[][] organizer = new DayButton[6][7];
+                        DayButton[][] organizer = new DayButton[5][6];
                         int currRow = 0;
                         int currCol = dayOfWeek - 1;
 
@@ -224,9 +224,9 @@ public class HelloApplication extends Application {
                             dayToAdd.assignColumnPosition(currCol);
 
                             currCol++;
-                            if(currCol >= 8){
+                            if(currCol >= 7){
                                 currRow++;
-                                currCol = 1;
+                                currCol = 0;
                             }
 
                             SerializationMachine.serialize(dayToAdd);
@@ -241,10 +241,24 @@ public class HelloApplication extends Application {
 
                         }
                     } else if(months.get(currMonth).equals("April") || months.get(currMonth).equals("June") || months.get(currMonth).equals("September") || months.get(currMonth).equals("November")){
+
+                        DayButton[][] organizer = new DayButton[5][6];
+                        int currRow = 0;
+                        int currCol = dayOfWeek - 1;
+
                         for(int k = 1; k < 31; k++){
                             //Create objects
                             DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + k + " " + year);
                             dayToAdd.assignDayOfWeek(dayOfWeek);
+                            dayToAdd.assignRowPosition(currRow);
+                            dayToAdd.assignColumnPosition(currCol);
+
+                            currCol++;
+                            if(currCol >= 7){
+                                currRow++;
+                                currCol = 0;
+                            }
+
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
                             System.out.println(dayToAdd.toString());
@@ -253,11 +267,25 @@ public class HelloApplication extends Application {
                                 dayOfWeek = 1;
                             }
                         }
-                    } else if (months.get(currMonth).equals("February") && daysToPrint == 366){
+                    } else if (months.get(currMonth).equals("February") && year % 4 == 0){
+
+                        DayButton[][] organizer = new DayButton[5][6];
+                        int currRow = 0;
+                        int currCol = dayOfWeek - 1;
+
                         for(int l = 1; l < 30; l ++){
                             //Create objects
                             DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + l + " " + year);
                             dayToAdd.assignDayOfWeek(dayOfWeek);
+                            dayToAdd.assignRowPosition(currRow);
+                            dayToAdd.assignColumnPosition(currCol);
+
+                            currCol++;
+                            if(currCol >= 7){
+                                currRow++;
+                                currCol = 0;
+                            }
+
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
                             System.out.println(dayToAdd.toString());
@@ -267,10 +295,24 @@ public class HelloApplication extends Application {
                             }
                         }
                     } else if (months.get(currMonth).equals("February")){
+
+                        DayButton[][] organizer = new DayButton[5][6];
+                        int currRow = 0;
+                        int currCol = dayOfWeek - 1;
+
                         for(int n = 1; n < 29; n++){
                             //Create objects
                             DayButton dayToAdd = new DayButton(months.get(currMonth) + " " + n + " " + year);
                             dayToAdd.assignDayOfWeek(dayOfWeek);
+                            dayToAdd.assignRowPosition(currRow);
+                            dayToAdd.assignColumnPosition(currCol);
+
+                            currCol++;
+                            if(currCol >= 7){
+                                currRow++;
+                                currCol = 0;
+                            }
+
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
                             System.out.println(dayToAdd.toString());
@@ -288,6 +330,7 @@ public class HelloApplication extends Application {
             } catch (IOException ioe){
                 ioe.printStackTrace();
             }
+            year--;
 
         } else {
             System.out.println("Found");
