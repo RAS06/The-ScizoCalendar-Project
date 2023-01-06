@@ -76,8 +76,12 @@ public class HelloApplication extends Application {
 
     public void buildUI() throws IOException {
         constructStructure();
+        DayButton[][] mutatorsReference = new DayButton[6][7];
         Label l = new Label("January " + year);
-        l.setStyle("-fx-text-fill: white");
+        l.setPrefWidth(100);
+        l.setPrefHeight(100);
+        l.setStyle("-fx-text-fill: white;" + "-fx-font-size: 12pt;" + "-fx-border-style: solid;" + "-fx-border-color: white;" + "-fx-border-width: 1pt;");
+
         gp.add(l, 3, 0);
         AtomicInteger currentDisplayedMonth = new AtomicInteger(1);
         AtomicInteger displayYear = new AtomicInteger(year);
@@ -98,6 +102,24 @@ public class HelloApplication extends Application {
                 displayYear.getAndDecrement();
             }
             l.setText(months.get(index - 1 ) + " " + displayYear.get());
+            try {
+                DayButton[][] implant = SerializationMachine.deserialize(String.valueOf(displayYear.get()), months.get(index - 1));
+                for(int row = 0; row < 6; row++){
+                    for(int col = 0; col < 7; col++){
+                        gp.getChildren().remove(mutatorsReference[row][col]);
+                        if(implant[row][col] != null) {
+                            gp.add(implant[row][col], col, row + 9);
+                        } else{
+                            DayButton empty = new DayButton("");
+                            empty.setPrefWidth(100);
+                            empty.setPrefHeight(100);
+                            gp.add(empty, col, row + 9);
+                        }
+                    }
+                }
+            } catch (IOException ioe) {
+                throw new RuntimeException(ioe);
+            }
         });
 
         Button right = new Button("Next");
@@ -115,17 +137,40 @@ public class HelloApplication extends Application {
                 displayYear.getAndIncrement();
             }
             l.setText(months.get(index - 1 ) + " " + displayYear.get());
+            try {
+                DayButton[][] implant = SerializationMachine.deserialize(String.valueOf(displayYear.get()), months.get(index - 1));
+                for(int row = 0; row < 6; row++){
+                    for(int col = 0; col < 7; col++){
+                        gp.getChildren().remove(mutatorsReference[row][col]);
+                        if(implant[row][col] != null) {
+                            gp.add(implant[row][col], col, row + 9);
+                        } else{
+                            DayButton empty = new DayButton("");
+                            empty.setPrefWidth(100);
+                            empty.setPrefHeight(100);
+                            gp.add(empty, col, row + 9);
+                        }
+                    }
+                }
+            } catch (IOException ioe) {
+                throw new RuntimeException(ioe);
+            }
         });
 
-        for(int i = 0; i < 7; i++){
-            for(int j = 9; j < 15; j++){
-                DayButton dateButton = new DayButton("String Literal");
+        //Organize buttons for visual mutations
+
+        //ROW-MAJOR
+        for(int i = 9; i < 15; i++){
+            for(int j = 0; j < 7; j++){
+                Calendar c = Calendar.getInstance();
+                DayButton[][] intitalize = SerializationMachine.deserialize(Integer.toString(c.get(Calendar.YEAR)), "January");
+                DayButton dateButton = intitalize[i - 9][j];
                 dateButton.setPrefWidth(100);
                 dateButton.setPrefHeight(100);
-                gp.add(dateButton, i, j);
+                gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR
+                mutatorsReference[i - 9][j] = dateButton;
             }
         }
-        SerializationMachine.deserialize("2023", "January");
     }
 
     public void constructStructure() {
@@ -336,6 +381,14 @@ public class HelloApplication extends Application {
             System.out.println("Found");
         }
     }
+
+    //<OVERLOAD LOCATION>
+
+
+    // Plans to create .txt generator here.
+
+
+    // </OVERLOAD LOCATION>
 
     public static void main(String[] args) {
         launch();

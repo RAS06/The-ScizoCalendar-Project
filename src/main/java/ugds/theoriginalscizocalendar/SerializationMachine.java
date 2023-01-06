@@ -1,6 +1,7 @@
 package ugds.theoriginalscizocalendar;
 
 import com.google.gson.Gson;
+import javafx.scene.text.Font;
 
 import java.io.*;
 
@@ -43,6 +44,10 @@ public class SerializationMachine {
                 line = line.substring(line.indexOf(" ") + 1);
                 int col = Integer.parseInt(line.substring(0, line.indexOf("]")));
                 DayButton dayToAdd = new DayButton(dayOfWeek, row, col, date, mon, year);
+                dayToAdd.setPrefWidth(100);
+                dayToAdd.setPrefHeight(100);
+                Font font = new Font(40);
+                dayToAdd.setFont(font);
                 //System.out.println(mon + " " + date + " " + year + " " + dayOfWeek + " " + row + " " + col);
                 returnStructure[row][col] = dayToAdd;
             }
@@ -55,6 +60,7 @@ public class SerializationMachine {
 //            }
 //            System.out.println();
 //        }
+        br.close();
         return returnStructure;
     }
 }
