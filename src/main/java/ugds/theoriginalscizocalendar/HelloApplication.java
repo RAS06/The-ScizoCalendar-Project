@@ -1,12 +1,14 @@
 package ugds.theoriginalscizocalendar;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -143,6 +145,12 @@ public class HelloApplication extends Application {
                     for(int col = 0; col < 7; col++){
                         gp.getChildren().remove(mutatorsReference[row][col]);
                         if(implant[row][col] != null) {
+                            int finalRow = row;
+                            int finalCol = col;
+                            implant[row][col].addEventHandler(MouseEvent.MOUSE_ENTERED,
+                                    e1 -> {
+                                        implant[finalRow][finalCol].setText("Create an Appointment!");
+                                    });
                             gp.add(implant[row][col], col, row + 9);
                         } else{
                             DayButton empty = new DayButton("");
