@@ -173,9 +173,14 @@ public class HelloApplication extends Application {
                 Calendar c = Calendar.getInstance();
                 DayButton[][] intitalize = SerializationMachine.deserialize(Integer.toString(c.get(Calendar.YEAR)), "January");
                 DayButton dateButton = intitalize[i - 9][j];
+                if(intitalize[i - 9][j] != null) {
+                    gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR
+                } else {
+                    dateButton = new DayButton("");
+                    gp.add(dateButton, j, i);
+                }
                 dateButton.setPrefWidth(100);
                 dateButton.setPrefHeight(100);
-                gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR
                 mutatorsReference[i - 9][j] = dateButton;
             }
         }
