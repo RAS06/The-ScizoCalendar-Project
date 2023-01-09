@@ -110,12 +110,17 @@ public class HelloApplication extends Application {
                     for(int col = 0; col < 7; col++){
                         gp.getChildren().remove(mutatorsReference[row][col]);
                         if(implant[row][col] != null) {
+                            int finalRow = row;
+                            int finalCol = col;
+                            implant[row][col].addEventHandler(MouseEvent.MOUSE_ENTERED,
+                                    e1 -> {
+                                        implant[finalRow][finalCol].setText("+ Create an Appointment!");
+                                    });
+                            implant[row][col].addEventHandler(MouseEvent.MOUSE_EXITED,
+                                    e1 -> {
+                                        implant[finalRow][finalCol].setText(implant[finalRow][finalCol].getName());
+                                    });
                             gp.add(implant[row][col], col, row + 9);
-                        } else{
-                            DayButton empty = new DayButton("");
-                            empty.setPrefWidth(100);
-                            empty.setPrefHeight(100);
-                            gp.add(empty, col, row + 9);
                         }
                     }
                 }
@@ -149,7 +154,12 @@ public class HelloApplication extends Application {
                             int finalCol = col;
                             implant[row][col].addEventHandler(MouseEvent.MOUSE_ENTERED,
                                     e1 -> {
-                                        implant[finalRow][finalCol].setText("Create an Appointment!");
+                                        implant[finalRow][finalCol].setText("+ Create an Appointment!");
+                                        //implant[finalRow][finalCol].setFont(Font(10));       This needs to shrink so it's readable and then expand.
+                                    });
+                            implant[row][col].addEventHandler(MouseEvent.MOUSE_EXITED,
+                                    e1 -> {
+                                        implant[finalRow][finalCol].setText(implant[finalRow][finalCol].getName());
                                     });
                             gp.add(implant[row][col], col, row + 9);
                         } else{
@@ -174,6 +184,13 @@ public class HelloApplication extends Application {
                 DayButton[][] intitalize = SerializationMachine.deserialize(Integer.toString(c.get(Calendar.YEAR)), "January");
                 DayButton dateButton = intitalize[i - 9][j];
                 if(intitalize[i - 9][j] != null) {
+                    DayButton finalDateButton = dateButton;
+                    dateButton.addEventHandler(MouseEvent.MOUSE_ENTERED, e1 -> {
+                        finalDateButton.setText("+ Create an Appointment!");
+                    });
+                    dateButton.addEventHandler(MouseEvent.MOUSE_EXITED, e1 -> {
+                        finalDateButton.setText(finalDateButton.getName());
+                    });
                     gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR
                 } else {
                     dateButton = new DayButton("");
