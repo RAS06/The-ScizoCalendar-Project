@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
@@ -23,6 +24,7 @@ import java.util.Calendar;
 
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -114,11 +116,18 @@ public class HelloApplication extends Application {
                             int finalCol = col;
                             implant[row][col].addEventHandler(MouseEvent.MOUSE_ENTERED,
                                     e1 -> {
-                                        implant[finalRow][finalCol].setText("+ Create an Appointment!");
+                                        implant[finalRow][finalCol].setFont(new Font(11));
+                                        implant[finalRow][finalCol].setText("+ Create or view\n Appointments!");
                                     });
                             implant[row][col].addEventHandler(MouseEvent.MOUSE_EXITED,
                                     e1 -> {
+                                        implant[finalRow][finalCol].setFont(new Font(40));
                                         implant[finalRow][finalCol].setText(implant[finalRow][finalCol].getName());
+                                    });
+                            implant[row][col].setOnAction(
+                                    (e2) -> {
+                                        AppointmentPane ap = new AppointmentPane();
+                                        Optional<DialogData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
                         }
@@ -154,12 +163,18 @@ public class HelloApplication extends Application {
                             int finalCol = col;
                             implant[row][col].addEventHandler(MouseEvent.MOUSE_ENTERED,
                                     e1 -> {
-                                        implant[finalRow][finalCol].setText("+ Create an Appointment!");
-                                        //implant[finalRow][finalCol].setFont(Font(10));       This needs to shrink so it's readable and then expand.
+                                        implant[finalRow][finalCol].setFont(new Font(11));
+                                        implant[finalRow][finalCol].setText("+ Create or view\n Appointments!");
                                     });
                             implant[row][col].addEventHandler(MouseEvent.MOUSE_EXITED,
                                     e1 -> {
+                                        implant[finalRow][finalCol].setFont(new Font(40));
                                         implant[finalRow][finalCol].setText(implant[finalRow][finalCol].getName());
+                                    });
+                            implant[row][col].setOnAction(
+                                    (e2) -> {
+                                        AppointmentPane ap = new AppointmentPane();
+                                        Optional<DialogData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
                         } else{
@@ -186,11 +201,18 @@ public class HelloApplication extends Application {
                 if(intitalize[i - 9][j] != null) {
                     DayButton finalDateButton = dateButton;
                     dateButton.addEventHandler(MouseEvent.MOUSE_ENTERED, e1 -> {
-                        finalDateButton.setText("+ Create an Appointment!");
+                        finalDateButton.setFont(new Font(11));
+                        finalDateButton.setText("+ Create or view\n Appointments!");
                     });
                     dateButton.addEventHandler(MouseEvent.MOUSE_EXITED, e1 -> {
+                        finalDateButton.setFont(new Font(40));
                         finalDateButton.setText(finalDateButton.getName());
                     });
+                    dateButton.setOnAction(
+                            (e2) -> {
+                                AppointmentPane ap = new AppointmentPane();
+                                ap.showAndWait();
+                            });
                     gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR
                 } else {
                     dateButton = new DayButton("");
