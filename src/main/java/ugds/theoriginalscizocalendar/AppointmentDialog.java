@@ -24,8 +24,7 @@ public class AppointmentDialog extends Dialog<AppointmentData> {
         getDialogPane().setContent(pane);
         doneButton.setOnAction(e -> {
             String save = in.getText();
-            System.out.println(source.toString());
-
+            AppointmentData aData = new AppointmentData(source, save);
         });
 
 
