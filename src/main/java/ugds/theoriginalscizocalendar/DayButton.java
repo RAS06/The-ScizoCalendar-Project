@@ -52,6 +52,6 @@ public class DayButton extends Button {
 
     @Override
     public String toString(){
-        return name + " " + dayOfWeek + " [" + rowPosition + " " + columnPosition + "]";
+        return month + " " + numericalDate + " " + year + " " + dayOfWeek + " [" + rowPosition + " " + columnPosition + "]";
     }
 }

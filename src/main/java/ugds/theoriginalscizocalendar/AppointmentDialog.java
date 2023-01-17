@@ -7,18 +7,27 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class AppointmentDialog extends Dialog<DialogData> {
+public class AppointmentDialog extends Dialog<AppointmentData> {
 
     public TextArea in = new TextArea();
-    public AppointmentDialog() {
+    public Button doneButton = new Button("Done");
+    public DayButton source;
+    public AppointmentDialog(DayButton db) {
         super();
-        this.setTitle("Add Appointments!");
+        source = db;
+        this.setTitle("Add an Appointment!");
         buildUI();
     }
 
     private void buildUI() {
         Pane pane = createGridPane();
         getDialogPane().setContent(pane);
+        doneButton.setOnAction(e -> {
+            String save = in.getText();
+            System.out.println(source.toString());
+
+        });
+
 
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
     }
@@ -26,6 +35,7 @@ public class AppointmentDialog extends Dialog<DialogData> {
     public Pane createGridPane(){
         VBox content = new VBox(18);
         content.getChildren().add(in);
+        content.getChildren().add(doneButton);
         content.setPrefWidth(400);
         content.setPrefHeight(250);
 

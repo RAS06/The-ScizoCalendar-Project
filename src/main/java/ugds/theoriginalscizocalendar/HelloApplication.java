@@ -1,7 +1,6 @@
 package ugds.theoriginalscizocalendar;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -126,8 +125,8 @@ public class HelloApplication extends Application {
                                     });
                             implant[row][col].setOnAction(
                                     (e2) -> {
-                                        AppointmentPane ap = new AppointmentPane();
-                                        Optional<DialogData> result = ap.showAndWait();
+                                        AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
+                                        Optional<AppointmentData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
                         }
@@ -173,8 +172,8 @@ public class HelloApplication extends Application {
                                     });
                             implant[row][col].setOnAction(
                                     (e2) -> {
-                                        AppointmentPane ap = new AppointmentPane();
-                                        Optional<DialogData> result = ap.showAndWait();
+                                        AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
+                                        Optional<AppointmentData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
                         } else{
@@ -210,7 +209,7 @@ public class HelloApplication extends Application {
                     });
                     dateButton.setOnAction(
                             (e2) -> {
-                                AppointmentPane ap = new AppointmentPane();
+                                AppointmentPane ap = new AppointmentPane(finalDateButton);
                                 ap.showAndWait();
                             });
                     gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR

@@ -6,12 +6,15 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-public class AppointmentPane extends Dialog<DialogData> {
+public class AppointmentPane extends Dialog<AppointmentData> {
     public Button addAppointment = new Button("Add Appointment");
+    public DayButton source;
     public Button viewAppointment = new Button("View Appointments");
-    public AppointmentPane() {
+
+    public AppointmentPane(DayButton db) {
         super();
         this.setTitle("View or Add Appointments!");
+        source = db;
         buildUI();
     }
 
@@ -19,7 +22,7 @@ public class AppointmentPane extends Dialog<DialogData> {
         Pane pane = createGridPane();
         getDialogPane().setContent(pane);
         addAppointment.setOnAction((e) -> {
-            AppointmentDialog ad = new AppointmentDialog();
+            AppointmentDialog ad = new AppointmentDialog(source);
             ad.showAndWait();
         });
 

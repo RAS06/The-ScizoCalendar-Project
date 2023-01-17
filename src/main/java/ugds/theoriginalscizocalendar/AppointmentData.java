@@ -1,6 +1,6 @@
 package ugds.theoriginalscizocalendar;
 
-public class DialogData {
+public class AppointmentData {
     public String path;
 
 
