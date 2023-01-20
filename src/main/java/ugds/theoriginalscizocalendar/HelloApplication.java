@@ -13,17 +13,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
+import java.util.*;
 
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -129,6 +127,11 @@ public class HelloApplication extends Application {
                                         Optional<AppointmentData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
+                        } else{
+                            DayButton empty = new DayButton("");
+                            empty.setPrefWidth(100);
+                            empty.setPrefHeight(100);
+                            gp.add(empty, col, row + 9);
                         }
                     }
                 }
@@ -172,7 +175,11 @@ public class HelloApplication extends Application {
                                     });
                             implant[row][col].setOnAction(
                                     (e2) -> {
+                                        ArrayList<String> appointments = seekAssociation(implant[finalRow][finalCol]);
                                         AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
+                                        if(appointments != null){
+                                            ap.sendAppointmentsTo(appointments);
+                                        }
                                         Optional<AppointmentData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
@@ -222,6 +229,25 @@ public class HelloApplication extends Application {
                 mutatorsReference[i - 9][j] = dateButton;
             }
         }
+    }
+
+    private ArrayList<String> seekAssociation(DayButton in) {
+        File storageDirectory = new File("src/main/resources/ugds/theoriginalscizocalendar/appointmentStorage");
+        if(storageDirectory.list() != null) {
+            String[] files = storageDirectory.list();
+            ArrayList<String> match = new ArrayList<>();
+            String target = "";
+            //String components = in.toString();
+            target = target + in.getMonth() + in.getNumericalDate() + in.getYear() + in.getWeekDay();
+
+            for (int i = 0; i < files.length; i++) {
+                if (files[i].indexOf(target) > - 1) {
+                    match.add(files[i]);
+                }
+            }
+            return match;
+        }
+        else return null;
     }
 
     public void constructStructure() {

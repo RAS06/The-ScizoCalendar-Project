@@ -45,6 +45,9 @@ public class DayButton extends Button {
     public int getWeekDay(){return dayOfWeek;}
     public int getRowPosition(){return rowPosition;}
     public int getColumnPosition(){return columnPosition;}
+    public String getMonth(){return month;}
+    public int getNumericalDate(){return numericalDate;}
+    public int getYear() {return year;}
 
     public void assignDayOfWeek(int weekDay){dayOfWeek = weekDay;}
     public void assignRowPosition(int pos){rowPosition = pos;}

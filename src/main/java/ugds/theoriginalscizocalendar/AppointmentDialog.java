@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 public class AppointmentDialog extends Dialog<AppointmentData> {
 
     public TextArea in = new TextArea();
-    public Button doneButton = new Button("Done");
+    public Button doneButton = new Button("Save/Complete");
     public DayButton source;
     public AppointmentDialog(DayButton db) {
         super();
