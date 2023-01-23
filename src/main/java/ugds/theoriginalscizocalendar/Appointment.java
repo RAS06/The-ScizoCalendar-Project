@@ -8,4 +8,10 @@ public class Appointment {
         id = name;
         info = data;
     }
+    @Override
+    public String toString(){
+        return id + " " + info;
+    }
+
+    public String getInfo(){return info;}
 }

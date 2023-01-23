@@ -123,7 +123,13 @@ public class HelloApplication extends Application {
                                     });
                             implant[row][col].setOnAction(
                                     (e2) -> {
+                                        ArrayList<String> appointments = seekAssociation(implant[finalRow][finalCol]);
                                         AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
+                                        if(appointments != null){
+                                            //System.out.println(appointments);
+                                            ap.sendAppointmentsTo(appointments);
+                                        }
+                                        ap.buildUI();
                                         Optional<AppointmentData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
@@ -178,8 +184,10 @@ public class HelloApplication extends Application {
                                         ArrayList<String> appointments = seekAssociation(implant[finalRow][finalCol]);
                                         AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
                                         if(appointments != null){
+                                            //System.out.println(appointments);
                                             ap.sendAppointmentsTo(appointments);
                                         }
+                                        ap.buildUI();
                                         Optional<AppointmentData> result = ap.showAndWait();
                                     });
                             gp.add(implant[row][col], col, row + 9);
@@ -216,8 +224,14 @@ public class HelloApplication extends Application {
                     });
                     dateButton.setOnAction(
                             (e2) -> {
+                                ArrayList<String> appointments = seekAssociation(finalDateButton);
                                 AppointmentPane ap = new AppointmentPane(finalDateButton);
-                                ap.showAndWait();
+                                if(appointments != null){
+                                    //System.out.println(appointments);
+                                    ap.sendAppointmentsTo(appointments);
+                                }
+                                ap.buildUI();
+                                Optional<AppointmentData> result = ap.showAndWait();
                             });
                     gp.add(dateButton, j, i); //NODE ADDITION IS IN COLUMN-MAJOR
                 } else {
@@ -243,6 +257,7 @@ public class HelloApplication extends Application {
             for (int i = 0; i < files.length; i++) {
                 if (files[i].indexOf(target) > - 1) {
                     match.add(files[i]);
+                    //System.out.println(files[i]);
                 }
             }
             return match;
