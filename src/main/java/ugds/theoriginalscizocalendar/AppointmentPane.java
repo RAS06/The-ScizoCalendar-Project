@@ -18,7 +18,9 @@ public class AppointmentPane extends Dialog {
     public Button addAppointment = new Button("Add Appointment");
     public DayButton source;
     public Button viewAppointment = new Button("View Appointments");
+    public static ArrayList<Button> appointmentButtons = new ArrayList<>();
     public ArrayList<String> appointments = new ArrayList<>();
+    public Pane pane = createGridPane();
 
     public AppointmentPane(DayButton db) {
         super();
@@ -32,7 +34,7 @@ public class AppointmentPane extends Dialog {
 
 
     public void buildUI() {
-        Pane pane = createGridPane();
+
         getDialogPane().setContent(pane);
         addAppointment.setOnAction((e) -> {
             AppointmentDialog ad = new AppointmentDialog(source);
@@ -45,18 +47,22 @@ public class AppointmentPane extends Dialog {
 
             for (int i = 0; i < add.size(); i++) {
                 Button b = new Button("Appointment " + (i + 1));
+                appointmentButtons.add(b);
                 pane.getChildren().add(b);
                 b.setLayoutX(10);
                 b.setLayoutY(100 * (i + 1));
 
                 int finalI = i;
                 b.setOnAction((e)-> {
-                    AppointmentViewer av = new AppointmentViewer(add.get(finalI));
+                    AppointmentViewer av = new AppointmentViewer(add.get(finalI), finalI, this);
                     av.showAndWait();
                 });
             }
         }
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+    }
+    public void removeButton(int id){
+        pane.getChildren().remove(appointmentButtons.get(id));
     }
 
     private ArrayList<Appointment> readAppointments() {
@@ -77,6 +83,7 @@ public class AppointmentPane extends Dialog {
         }
         return appointmentItems;
     }
+
 
     public Pane createGridPane(){
         VBox content = new VBox(18);

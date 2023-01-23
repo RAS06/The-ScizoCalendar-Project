@@ -1,4 +1,0 @@
-Test Appointment. 
-
-Appointment that exists as a test with which I can view my own
-filename conventions. 

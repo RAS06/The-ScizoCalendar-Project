@@ -14,4 +14,6 @@ public class Appointment {
     }
 
     public String getInfo(){return info;}
+
+    public String getID() {return id;}
 }
