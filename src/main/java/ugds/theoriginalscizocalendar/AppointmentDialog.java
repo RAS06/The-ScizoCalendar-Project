@@ -12,6 +12,7 @@ public class AppointmentDialog extends Dialog<AppointmentData> {
     public TextArea in = new TextArea();
     public Button doneButton = new Button("Save/Complete");
     public DayButton source;
+    public AppointmentPane pain;
     public AppointmentDialog(DayButton db) {
         super();
         source = db;
