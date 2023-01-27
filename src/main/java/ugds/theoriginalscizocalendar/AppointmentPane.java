@@ -6,10 +6,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -21,10 +18,12 @@ public class AppointmentPane extends Dialog {
     public static ArrayList<Button> appointmentButtons = new ArrayList<>();
     public ArrayList<String> appointments = new ArrayList<>();
     public Pane pane = createGridPane();
+    public HelloApplication hellApp;
 
-    public AppointmentPane(DayButton db) {
+    public AppointmentPane(DayButton db, HelloApplication ha) {
         super();
         this.setTitle("View or Add Appointments!");
+        hellApp = ha;
         source = db;
     }
 
@@ -37,10 +36,18 @@ public class AppointmentPane extends Dialog {
 
         getDialogPane().setContent(pane);
         addAppointment.setOnAction((e) -> {
-            AppointmentDialog ad = new AppointmentDialog(source);
+            AppointmentDialog ad = new AppointmentDialog(source, this);
             ad.showAndWait();
         });
         //System.out.println(appointments);
+        readAndSet();
+        getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+    }
+    public void readAndSet(){
+        for (Button in: appointmentButtons) {
+            pane.getChildren().remove(in);
+        }
+
         if(appointments.size() > 0) {
             //System.out.println("Appointments read");
             ArrayList<Appointment> add = readAppointments();
@@ -59,27 +66,39 @@ public class AppointmentPane extends Dialog {
                 });
             }
         }
-        getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
     }
     public void removeButton(int id){
         pane.getChildren().remove(appointmentButtons.get(id));
+        appointmentButtons.remove(id);
+
+        appointments.remove(id);
+        readAndSet();
+    }
+
+    public void addButton(){
+        sendAppointmentsTo(hellApp.seekAssociation(source));
     }
 
     private ArrayList<Appointment> readAppointments() {
         ArrayList<Appointment> appointmentItems = new ArrayList<>();
-        for(int i = 0; i < appointments.size(); i++) {
-            try {
-                FileInputStream fis = new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/appointmentStorage/" + appointments.get(i));
-                BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                String info = "";
-                String add;
-                while((add = br.readLine()) != null) {
-                    info = info + add;
+        if(appointments.size() > 0) {
+            for (int i = 0; i < appointments.size(); i++) {
+                try {
+                    FileInputStream fis = new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/appointmentStorage/" + appointments.get(i));
+                    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+                    String info = "";
+                    String add;
+                    while ((add = br.readLine()) != null) {
+                        info = info + add;
+                    }
+                    Appointment a = new Appointment(appointments.get(i), info);
+                    appointmentItems.add(a);
+                    br.close();
+                    ;
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
                 }
-                Appointment a = new Appointment(appointments.get(i), info);
-                appointmentItems.add(a);
-                br.close();;
-            }catch(IOException ioe){ioe.printStackTrace();}
+            }
         }
         return appointmentItems;
     }

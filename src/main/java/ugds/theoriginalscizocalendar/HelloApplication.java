@@ -124,7 +124,7 @@ public class HelloApplication extends Application {
                             implant[row][col].setOnAction(
                                     (e2) -> {
                                         ArrayList<String> appointments = seekAssociation(implant[finalRow][finalCol]);
-                                        AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
+                                        AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol], this);
                                         if(appointments != null){
                                             //System.out.println(appointments);
                                             ap.sendAppointmentsTo(appointments);
@@ -182,7 +182,7 @@ public class HelloApplication extends Application {
                             implant[row][col].setOnAction(
                                     (e2) -> {
                                         ArrayList<String> appointments = seekAssociation(implant[finalRow][finalCol]);
-                                        AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol]);
+                                        AppointmentPane ap = new AppointmentPane(implant[finalRow][finalCol], this);
                                         if(appointments != null){
                                             //System.out.println(appointments);
                                             ap.sendAppointmentsTo(appointments);
@@ -225,7 +225,7 @@ public class HelloApplication extends Application {
                     dateButton.setOnAction(
                             (e2) -> {
                                 ArrayList<String> appointments = seekAssociation(finalDateButton);
-                                AppointmentPane ap = new AppointmentPane(finalDateButton);
+                                AppointmentPane ap = new AppointmentPane(finalDateButton, this);
                                 if(appointments != null){
                                     //System.out.println(appointments);
                                     ap.sendAppointmentsTo(appointments);
@@ -245,7 +245,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    private ArrayList<String> seekAssociation(DayButton in) {
+    public ArrayList<String> seekAssociation(DayButton in) {
         File storageDirectory = new File("src/main/resources/ugds/theoriginalscizocalendar/appointmentStorage");
         if(storageDirectory.list() != null) {
             String[] files = storageDirectory.list();

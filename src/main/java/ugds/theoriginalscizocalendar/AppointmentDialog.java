@@ -13,9 +13,10 @@ public class AppointmentDialog extends Dialog<AppointmentData> {
     public Button doneButton = new Button("Save/Complete");
     public DayButton source;
     public AppointmentPane pain;
-    public AppointmentDialog(DayButton db) {
+    public AppointmentDialog(DayButton db, AppointmentPane apin) {
         super();
         source = db;
+        pain = apin;
         this.setTitle("Add an Appointment!");
         buildUI();
     }
@@ -26,6 +27,9 @@ public class AppointmentDialog extends Dialog<AppointmentData> {
         doneButton.setOnAction(e -> {
             String save = in.getText();
             AppointmentData aData = new AppointmentData(source, save);
+
+            pain.addButton();
+            pain.readAndSet();
         });
 
 
