@@ -35,11 +35,12 @@ public class HelloApplication extends Application {
     public static ArrayList<String> week = new ArrayList<String>(Arrays.asList("List doesn't start at zero for some reason", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"));
     public  GridPane gp = new GridPane();
     public ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
-
+    public TheMiseryMachine tmm = new TheMiseryMachine(this);    //AHAHAHAHAAHAHAHAAHAHAA  RAAEQEQAAEQEQAAEQEQ  QEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEEQEEQEEQEQEQEEQQEQEQEEQEQEQEQEEQ   REALM WARP INTO FOUNTAIN AHAHAHHAHAHAHAHAAAAAAA
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        tmm.start();
 
         //Binding attempts: result failure. Remains for fallback purposes.
         //AnchorPane a = new AnchorPane();
