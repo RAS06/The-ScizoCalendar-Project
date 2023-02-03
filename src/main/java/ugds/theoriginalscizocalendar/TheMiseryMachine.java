@@ -1,5 +1,9 @@
 package ugds.theoriginalscizocalendar;
 
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
+import javafx.scene.layout.GridPane;
+
 public class TheMiseryMachine extends Thread{
     public HelloApplication hellApp;
 
@@ -12,7 +16,8 @@ public class TheMiseryMachine extends Thread{
         while (this != null) {
             try {
 
-                sleep(1000);
+                sleep(3000);
+                seekAndFireAbnormality();
 
 
             } catch (InterruptedException e) {
@@ -20,4 +25,10 @@ public class TheMiseryMachine extends Thread{
             }
         }
     }
+
+    public void seekAndFireAbnormality() {
+        //6, 14 COLMAJ
+        hellApp.getNodeByRowColumnIndex(5, 5); //.setStyle("-fx-fill: black")
+    }
+
 }

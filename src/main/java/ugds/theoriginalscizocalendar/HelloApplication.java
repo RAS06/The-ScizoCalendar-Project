@@ -1,9 +1,11 @@
 package ugds.theoriginalscizocalendar;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -36,6 +38,8 @@ public class HelloApplication extends Application {
     public  GridPane gp = new GridPane();
     public ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
     public TheMiseryMachine tmm = new TheMiseryMachine(this);    //AHAHAHAHAAHAHAHAAHAHAA  RAAEQEQAAEQEQAAEQEQ  QEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEEQEEQEEQEQEQEEQQEQEQEEQEQEQEQEEQ   REALM WARP INTO FOUNTAIN AHAHAHHAHAHAHAHAAAAAAA
+    public AtomicInteger currentDisplayedMonth = new AtomicInteger(1);
+    public AtomicInteger displayYear = new AtomicInteger(year);
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -85,8 +89,7 @@ public class HelloApplication extends Application {
         l.setStyle("-fx-text-fill: white;" + "-fx-font-size: 12pt;" + "-fx-border-style: solid;" + "-fx-border-color: white;" + "-fx-border-width: 1pt;");
 
         gp.add(l, 3, 0);
-        AtomicInteger currentDisplayedMonth = new AtomicInteger(1);
-        AtomicInteger displayYear = new AtomicInteger(year);
+
 
         Button left = new Button("Previous");
         gp.add(left, 1, 0);
@@ -473,6 +476,18 @@ public class HelloApplication extends Application {
         } else {
             System.out.println("Found");
         }
+    }
+
+    public Node getNodeByRowColumnIndex (final int row, final int column) {
+        Node result = null;
+        ObservableList<Node> children = gp.getChildren();
+        try {
+            DayButton[][] curr = SerializationMachine.deserialize(String.valueOf(displayYear.get()), String.valueOf(currentDisplayedMonth.get()));
+        } catch(IOException ioe){ioe.printStackTrace();}
+
+
+
+        return result;
     }
 
     //<OVERLOAD LOCATION>
