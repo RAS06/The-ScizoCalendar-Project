@@ -39,7 +39,9 @@ public class HelloApplication extends Application {
     public ArrayList<String> months = new ArrayList<String>(Arrays.asList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
     public TheMiseryMachine tmm = new TheMiseryMachine(this);    //AHAHAHAHAAHAHAHAAHAHAA  RAAEQEQAAEQEQAAEQEQ  QEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEQEEQEEQEEQEQEQEEQQEQEQEEQEQEQEQEEQ   REALM WARP INTO FOUNTAIN AHAHAHHAHAHAHAHAAAAAAA
     public AtomicInteger currentDisplayedMonth = new AtomicInteger(1);
-    public AtomicInteger displayYear = new AtomicInteger(year);
+    public Calendar c = Calendar.getInstance();
+    public AtomicInteger displayYear = new AtomicInteger(c.get(Calendar.YEAR));
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -270,7 +272,7 @@ public class HelloApplication extends Application {
     }
 
     public void constructStructure() {
-        Calendar c = Calendar.getInstance();
+
 
         //Figure out what year it is.
         year = c.get(Calendar.YEAR);
@@ -478,16 +480,19 @@ public class HelloApplication extends Application {
         }
     }
 
-    public Node getNodeByRowColumnIndex (final int row, final int column) {
-        Node result = null;
+    public DayButton[][] getCurrGP () {
+        DayButton[][]currGP = new DayButton[6][7];
         ObservableList<Node> children = gp.getChildren();
-        try {
-            DayButton[][] curr = SerializationMachine.deserialize(String.valueOf(displayYear.get()), String.valueOf(currentDisplayedMonth.get()));
-        } catch(IOException ioe){ioe.printStackTrace();}
+        //for(Node n: children){System.out.println(n);}
+        int currCol = 0;
+        int currRow = 0;
+        for(int i = 3; i < children.size(); i++){
+            currGP[currRow][currCol] = (DayButton)(children.get(i));
+            currCol++;
+            if(currCol > 6){currCol = 0; currRow++;}
+        }
 
-
-
-        return result;
+        return currGP;
     }
 
     //<OVERLOAD LOCATION>
