@@ -480,19 +480,48 @@ public class HelloApplication extends Application {
         }
     }
 
-    public DayButton[][] getCurrGP () {
+    public ArrayList<DayButton> getCurrGP () {
+        ArrayList<DayButton> send = new ArrayList<>();
         DayButton[][]currGP = new DayButton[6][7];
         ObservableList<Node> children = gp.getChildren();
         //for(Node n: children){System.out.println(n);}
         int currCol = 0;
         int currRow = 0;
         for(int i = 3; i < children.size(); i++){
+            if(currRow == 6){
+                break;
+            }
             currGP[currRow][currCol] = (DayButton)(children.get(i));
             currCol++;
             if(currCol > 6){currCol = 0; currRow++;}
         }
+        for(int row = 0; row < currGP.length; row++){
+            for(int col = 0; col < currGP[0].length; col++){
+                if(currGP[row][col] instanceof DayButton && !(currGP[row][col].getName().equals("null")) && currGP[row][col] != null){
+                    send.add(currGP[row][col]);
+                }
+            }
+        }
 
-        return currGP;
+        return send;
+    }
+
+    public DayButton getRandomButton(){
+        ObservableList<Node> currGPElements = gp.getChildren();
+        System.out.println(currGPElements);
+        DayButton returnButton = null;
+        while(returnButton == null){
+            int attempt = (int)(Math.random() * (currGPElements.size() - 6) + 4);
+            if(currGPElements.get(attempt) instanceof DayButton){
+                DayButton candidate = (DayButton)currGPElements.get(attempt);
+                if(!(candidate.getNumericalDate() == 0))
+                    returnButton = (DayButton)currGPElements.get(attempt);
+            }
+        }
+        currGPElements.clear();
+
+
+        return returnButton;
     }
 
     //<OVERLOAD LOCATION>

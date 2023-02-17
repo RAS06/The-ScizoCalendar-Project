@@ -10,9 +10,8 @@ public class TheSpazMachine extends Thread{
     public AtomicBoolean running = new AtomicBoolean(false);
     public int count = 0;
 
-    public TheSpazMachine(HelloApplication in, DayButton[][] din, DayButton targetInit){
+    public TheSpazMachine(HelloApplication in, DayButton targetInit){
         hellfireApp = in;
-        ref = din;
         target = targetInit;
     }
     @Override
