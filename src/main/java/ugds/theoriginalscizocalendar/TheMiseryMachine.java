@@ -22,16 +22,15 @@ public class TheMiseryMachine extends Thread{
         while (running.get()) {
             try {
                 sleep(3000);
-                System.out.println(hellApp.getRandomButton());
 
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-//            int targetWeirdness = (int)(Math.random() * 2) + 1;
-//            switch (targetWeirdness) {
-//                case 1:seekAndFireAbnormality(); break;
-//                case 2:System.out.println("Safe...for now"); break;
-//            }
+            int targetWeirdness = (int)(Math.random() * 2) + 1;
+            switch (targetWeirdness) {
+                case 1:seekAndFireAbnormality(); break;
+                case 2:System.out.println("Safe...for now"); break;
+            }
         }
     }
 
@@ -39,21 +38,22 @@ public class TheMiseryMachine extends Thread{
 
     public void seekAndFireAbnormality() {
         //Find a valid DB object and cause it to stand out visually.
-        ArrayList<DayButton> reference = hellApp.getCurrGP();
-        DayButton target = null;
-        int indexOfOperableDB = (int)(Math.random() * reference.size() - 1);
+//        ArrayList<DayButton> reference = hellApp.getCurrGP();
+//        DayButton target = null;
+//        int indexOfOperableDB = (int)(Math.random() * reference.size() - 1);
+//
+//
+//        while(target == null || target.getNumericalDate() == 0) { //Find new
+//            if (reference.get(indexOfOperableDB) != null) {
+//                target = reference.get(indexOfOperableDB);
+//            } else {
+//                indexOfOperableDB = (int)(Math.random() * reference.size() - 1);
+//            }
+//        }
+//
 
-
-        while(target == null || target.getNumericalDate() == 0) { //Find new
-            if (reference.get(indexOfOperableDB) != null) {
-                target = reference.get(indexOfOperableDB);
-            } else {
-                indexOfOperableDB = (int)(Math.random() * reference.size() - 1);
-            }
-        }
-
+        DayButton target = hellApp.getRandomButton();
         System.out.println(target);
-
         TheSpazMachine spaz = new TheSpazMachine(hellApp, target);
         spaz.start();
 

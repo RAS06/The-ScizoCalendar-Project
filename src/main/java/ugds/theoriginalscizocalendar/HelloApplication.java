@@ -160,12 +160,13 @@ public class HelloApplication extends Application {
             }
             int index = currentDisplayedMonth.get();
             //Calculate and Change
+            if(currentDisplayedMonth.get() == 13){
+                displayYear.getAndIncrement();
+            }
             if(currentDisplayedMonth.get() > 12){
                 index -= 12;
             }
-            if(currentDisplayedMonth.get() == 12){
-                displayYear.getAndIncrement();
-            }
+
             l.setText(months.get(index - 1 ) + " " + displayYear.get());
             try {
                 DayButton[][] implant = SerializationMachine.deserialize(String.valueOf(displayYear.get()), months.get(index - 1));
@@ -510,15 +511,22 @@ public class HelloApplication extends Application {
         ObservableList<Node> currGPElements = gp.getChildren();
         System.out.println(currGPElements);
         DayButton returnButton = null;
+        int findCurrMonth = currentDisplayedMonth.get();
         while(returnButton == null){
             int attempt = (int)(Math.random() * (currGPElements.size() - 6) + 4);
             if(currGPElements.get(attempt) instanceof DayButton){
                 DayButton candidate = (DayButton)currGPElements.get(attempt);
-                if(!(candidate.getNumericalDate() == 0))
-                    returnButton = (DayButton)currGPElements.get(attempt);
+                if(!(candidate.getNumericalDate() == 0)) {
+                    if(findCurrMonth > 12){
+                        findCurrMonth = findCurrMonth - 12;
+                    }
+                    if(candidate.getMonth().equals(months.get(findCurrMonth - 1)))
+                        if(candidate.getYear() == displayYear.get())
+                            returnButton = (DayButton) currGPElements.get(attempt);
+                }
             }
         }
-        currGPElements.clear();
+        //currGPElements.clear();
 
 
         return returnButton;
