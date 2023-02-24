@@ -1,0 +1,4 @@
+Story instance one, where the situation is introduced.
+
+Empty line^^
+Concatenated as such.
