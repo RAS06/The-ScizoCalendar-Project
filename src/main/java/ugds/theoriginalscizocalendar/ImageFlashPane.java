@@ -11,8 +11,18 @@ import java.nio.file.Path;
 public class ImageFlashPane extends Dialog {
     private Path p;
 
-    public ImageFlashPane(Path imagePath) {
-        p = imagePath;
+    public ImageFlashPane() {
+        super();
+    }
+
+    public void receivePath(Path pIn){
+        p = pIn;
+        buildUI();
+    }
+
+    private void buildUI() {
+        Pane pane = createGridPane();
+        getDialogPane().setContent(pane);
     }
 
     public void closeThis() {

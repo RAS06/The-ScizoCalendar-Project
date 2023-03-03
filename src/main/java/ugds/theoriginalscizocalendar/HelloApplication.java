@@ -9,7 +9,10 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -41,12 +44,16 @@ public class HelloApplication extends Application {
     public AtomicInteger currentDisplayedMonth = new AtomicInteger(1);
     public Calendar c = Calendar.getInstance();
     public AtomicInteger displayYear = new AtomicInteger(c.get(Calendar.YEAR));
+    public AnchorPane aPain = new AnchorPane();
+
 
 
     @Override
     public void start(Stage stage) throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         tmm.start();
+
 
         //Binding attempts: result failure. Remains for fallback purposes.
         //AnchorPane a = new AnchorPane();
@@ -64,16 +71,21 @@ public class HelloApplication extends Application {
         //gp.add(new DayButton("Skeet"), 0, 0);
         //gp.add(new DayButton("Yeeet"), 1, 1);
         //gp.add(new DayButton("Reeet"), 2, 2);
+        aPain.getChildren().add(gp);
 
+        gp.translateXProperty().bind(aPain.widthProperty().subtract(gp.widthProperty()).divide(2));
+        gp.translateYProperty().bind(aPain.heightProperty().subtract(gp.heightProperty()).divide(2));
 
 
         stage.setHeight(1000);
         stage.setWidth(1000);
 
+        aPain.setStyle("-fx-background-color: black");
+
         DailyData testData = new DailyData("Name");
         //System.out.println(SerializationMachine.turnIntoJson(testData));
 
-        Scene scene = new Scene(gp, 900, 240);
+        Scene scene = new Scene(aPain, 900, 240);
         stage.setTitle("Hello!");
         buildUI();
         stage.setScene(scene);
@@ -84,6 +96,7 @@ public class HelloApplication extends Application {
 
     public void buildUI() throws IOException {
         constructStructure();
+
         DayButton[][] mutatorsReference = new DayButton[6][7];
         Label l = new Label("January " + year);
         l.setPrefWidth(100);
@@ -530,6 +543,12 @@ public class HelloApplication extends Application {
 
 
         return returnButton;
+    }
+
+
+    //REMOVE LATER
+    public void beginFlash(){
+
     }
 
     //<OVERLOAD LOCATION>

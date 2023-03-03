@@ -100,9 +100,10 @@ public class TheMiseryMachine extends Thread{
         int storyID = (int)(Math.random() * max);
         String nameOfFile = directory.list()[storyID];
         Path p = Paths.get("src/main/resources/ugds/theoriginalscizocalendar/imageStorage/" + nameOfFile);
-        TheSightMachine tsm = new TheSightMachine();
+        System.out.println(p.toString());
+
+        TheSightMachine tsm = new TheSightMachine(p, hellApp);
         tsm.start();
-        tsm.givePath(p);
 
     }
 
