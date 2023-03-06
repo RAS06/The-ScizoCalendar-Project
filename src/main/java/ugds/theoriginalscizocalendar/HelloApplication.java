@@ -1,5 +1,7 @@
 package ugds.theoriginalscizocalendar;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -16,17 +18,15 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
 
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -46,6 +46,10 @@ public class HelloApplication extends Application {
     public AtomicInteger displayYear = new AtomicInteger(c.get(Calendar.YEAR));
     public AnchorPane aPain = new AnchorPane();
 
+    public Image i = new Image(new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/emptyAnimation.png"));
+    public ImageView iv = new ImageView(i);
+
+    public HelloApplication() throws FileNotFoundException {}
 
 
     @Override
@@ -53,6 +57,9 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
         tmm.start();
+        //beginFlash();
+
+
 
 
         //Binding attempts: result failure. Remains for fallback purposes.
@@ -88,6 +95,13 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(aPain, 900, 240);
         stage.setTitle("Hello!");
         buildUI();
+
+        Image i = new Image(new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/emptyAnimation.png"));
+        ImageView iv = new ImageView(i);
+        aPain.getChildren().add(iv);
+
+        iv.setLayoutX(400);
+
         stage.setScene(scene);
         stage.show();
 
@@ -388,7 +402,6 @@ public class HelloApplication extends Application {
 
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
-                            System.out.println(dayToAdd.toString());
 
 
 
@@ -418,7 +431,6 @@ public class HelloApplication extends Application {
 
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
-                            System.out.println(dayToAdd.toString());
 
                             if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
@@ -445,7 +457,6 @@ public class HelloApplication extends Application {
 
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
-                            System.out.println(dayToAdd.toString());
 
                             if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
@@ -472,7 +483,6 @@ public class HelloApplication extends Application {
 
                             SerializationMachine.serialize(dayToAdd);
                             dayOfWeek++;
-                            System.out.println(dayToAdd.toString());
 
                             if(dayOfWeek >= 8){
                                 dayOfWeek = 1;
@@ -522,7 +532,6 @@ public class HelloApplication extends Application {
 
     public DayButton getRandomButton(){
         ObservableList<Node> currGPElements = gp.getChildren();
-        System.out.println(currGPElements);
         DayButton returnButton = null;
         int findCurrMonth = currentDisplayedMonth.get();
         while(returnButton == null){
@@ -547,9 +556,39 @@ public class HelloApplication extends Application {
 
 
     //REMOVE LATER
-    public void beginFlash(){
-
-    }
+//    public void beginFlash(){
+//        Timeline flashImages = new Timeline(new KeyFrame(Duration.seconds(5), e -> {
+//            int occured = (int)(Math.random() * 2) + 1;
+//            if(occured == 1) {
+//                System.out.println("Occured");
+//                double locationModifier = 0.5;
+//                int side = (int)(Math.random() * 2) + 1;
+//
+//                if (side == 1) locationModifier = 0.25; else locationModifier = 0.75;
+//
+//                File directory = new File("src/main/resources/ugds/theoriginalscizocalendar/imageStorage");
+//                int max = directory.list().length;
+//                int storyID = (int)(Math.random() * max);
+//                String nameOfFile = directory.list()[storyID];
+//                String p = "src/main/resources/ugds/theoriginalscizocalendar/imageStorage/" + nameOfFile;
+//
+//                try {
+//                    iv.setImage(new Image(new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/testStorage/download.jpg")));
+//                    iv.setLayoutX(aPain.getWidth() * locationModifier);
+//                    iv.setLayoutY(aPain.getHeight() / 2);
+//
+//                } catch (FileNotFoundException ex) {throw new RuntimeException(ex);}
+//            }
+//            else{
+//                try {
+//                    iv.setImage(new Image(new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/emptyAnimation.png")));
+//                    System.out.println("Did not occur");
+//                } catch (FileNotFoundException ex) {throw new RuntimeException(ex);}
+//            }
+//        }));
+//        flashImages.setCycleCount(Timeline.INDEFINITE);
+//        flashImages.play();
+//    }
 
     //<OVERLOAD LOCATION>
 

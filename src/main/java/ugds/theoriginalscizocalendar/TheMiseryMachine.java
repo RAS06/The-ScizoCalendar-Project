@@ -29,10 +29,10 @@ public class TheMiseryMachine extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            int targetWeirdness = (int)(Math.random() * 3) + 1;
+            int targetWeirdness = (int)(Math.random() * 5) + 1;
             switch (targetWeirdness) {
                 case 1:seekAndFireAbnormality(); break;
-                case 2:System.out.println("Safe...for now"); break;
+                case 2: break;
                 case 3:flashImage(); break;
             }
         }
@@ -58,7 +58,6 @@ public class TheMiseryMachine extends Thread{
 //
 
         DayButton target = hellApp.getRandomButton();
-        System.out.println(target);
         TheSpazMachine spaz = new TheSpazMachine(hellApp, target);
         spaz.start();
 
@@ -70,7 +69,6 @@ public class TheMiseryMachine extends Thread{
             PAV.show();
         });
 
-        System.out.println("Fired");
     }
 
     public String findTextIn() {
@@ -100,10 +98,9 @@ public class TheMiseryMachine extends Thread{
         int storyID = (int)(Math.random() * max);
         String nameOfFile = directory.list()[storyID];
         Path p = Paths.get("src/main/resources/ugds/theoriginalscizocalendar/imageStorage/" + nameOfFile);
-        System.out.println(p.toString());
 
-        TheSightMachine tsm = new TheSightMachine(p, hellApp);
-        tsm.start();
+        //TheSightMachine tsm = new TheSightMachine(p, hellApp);
+        //tsm.start();
 
     }
 

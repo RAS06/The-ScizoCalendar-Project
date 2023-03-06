@@ -30,18 +30,18 @@ public class TheSightMachine extends Thread{
         while (running.get()) {
 
             try {
-                System.out.println("Sight");
                 sleep(1000);
                 //selectImageSide
                 side = (int)(Math.random() * 2) + 1;
-                System.out.println(side);
-                InputStream stream = new FileInputStream(p.toString());
+
 
                 if(side == 1) locationModifier = 0.25; else locationModifier = 0.75;
-                Image i = new Image(stream);
-                ImageView iv = new ImageView();
-                iv.setImage(i);
-                hellApp.aPain.getChildren().add(iv);
+                Image i = new Image(new FileInputStream("src/main/resources/ugds/theoriginalscizocalendar/imageStorage/20230131_141447.jpg"));
+                ImageView iv = new ImageView(i);
+                //HelloApplication.aPain.getChildren().add(iv);
+                iv.maxHeight(50);
+                iv.maxWidth(50);
+                iv.setLayoutX(400);
 
 
                 times++;
