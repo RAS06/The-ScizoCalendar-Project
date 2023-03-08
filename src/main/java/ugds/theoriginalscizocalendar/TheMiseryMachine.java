@@ -29,7 +29,7 @@ public class TheMiseryMachine extends Thread{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            int targetWeirdness = (int)(Math.random() * 5) + 1;
+            int targetWeirdness = (int)(Math.random() * 10) + 1;
             switch (targetWeirdness) {
                 case 1:seekAndFireAbnormality(); break;
                 case 2: break;
